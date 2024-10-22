@@ -11,17 +11,22 @@ const defualtsTodos = [
     {text: 'Tomar el Curso de Reactjs', completed: false},
     {text: 'Llorar con la llorona', completed: false},
     {text: 'Renunciar', completed: false},
-    {text: 'Usar Estados Derivados', completed: true},
+    {text: 'Usar Estados Derivados', completed: true}
 ];
 
 function App() {
   const [todos, setTodos] = React.useState(defualtsTodos)
   const [searchValue, setSearchValue] = React.useState('');
-  console.log('Los usarios buscan todos de ' + searchValue)
 
   const completeTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length
- 
+
+  const searchedTodos = todos.filter((todo) => {
+    const todoText = todo.text.toLowerCase();
+    const searchText = searchValue.toLowerCase()
+    return todoText.includes(searchText)
+    }
+  );
 
   return (
     <>
@@ -31,7 +36,7 @@ function App() {
     setSearchValue={setSearchValue}/>
 
     <TodoList>
-      {defualtsTodos.map(todo => (
+      {searchedTodos.map(todo => (
         <TodoItem 
         key={todo.text} 
         text={todo.text}
