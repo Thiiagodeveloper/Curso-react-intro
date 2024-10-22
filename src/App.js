@@ -14,13 +14,17 @@ const defualtsTodos = [
     {text: 'Usar Estados Derivados', completed: true}
 ];
 
-function App() {
+function App() { 
+  //Todo Search 
   const [todos, setTodos] = React.useState(defualtsTodos)
   const [searchValue, setSearchValue] = React.useState('');
 
+  //Todo Total Counter => todos total and completed  
   const completeTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length
+  
 
+  //Todo Search => Search
   const searchedTodos = todos.filter((todo) => {
     const todoText = todo.text.toLowerCase();
     const searchText = searchValue.toLowerCase()
@@ -28,9 +32,32 @@ function App() {
     }
   );
 
+  //Todo Complete => Selection and complete
+  const completeTodo = (text) => {
+    const newTodos =[...todos];
+    const todoIndex = newTodos.findIndex(
+      (todo) => todo.text === text
+    );
+
+    newTodos[todoIndex].completed = true
+    setTodos(newTodos)
+  }
+
+  //Todo Delete => Selection and Delete 
+  const deleteTodo = (text) => {
+    const newTodos = [...todos];
+    const todoIndex = newTodos.findIndex(
+      (todo) => todo.text === text
+    );
+
+    newTodos.splice(todoIndex, 1)
+    setTodos(newTodos)
+  }
+
   return (
     <>
     <TodoCounter completed={completeTodos} total={totalTodos}/>
+
     <TodoSearch
     searchValue={searchValue}
     setSearchValue={setSearchValue}/>
@@ -41,6 +68,8 @@ function App() {
         key={todo.text} 
         text={todo.text}
         completed={todo.completed}
+        onComplete ={() => completeTodo(todo.text)}
+        onDelete = {() => deleteTodo(todo.text)}
         />
       ))}
     </TodoList>
