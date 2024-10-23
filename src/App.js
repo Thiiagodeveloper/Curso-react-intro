@@ -22,7 +22,7 @@ function App() {
   //Todo Total Counter => todos total and completed  
   const completeTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length
-  
+
 
   //Todo Search => Search
   const searchedTodos = todos.filter((todo) => {
@@ -68,6 +68,7 @@ function App() {
         key={todo.text} 
         text={todo.text}
         completed={todo.completed}
+        //Forma de pasarle una functions a un componente sin ejecutarla
         onComplete ={() => completeTodo(todo.text)}
         onDelete = {() => deleteTodo(todo.text)}
         />
