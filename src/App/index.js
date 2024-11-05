@@ -5,32 +5,12 @@ import { AppUI } from './AppUI';
 
 function App() { 
   //Todo Search 
-  const [todos, saveTodos] = useLocalStorage('TODOS_V1',[])
+  const {item:todos, saveItem:saveTodos, loading, error} = useLocalStorage('TODOS_V1',[])
   const [searchValue, setSearchValue] = React.useState('');
 
   //Todo Total Counter => todos total and completed  
   const completeTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length
-
-  console.log('Log1');
-
-  // React.useEffect(() => {
-  // console.log('Looooog2');
-
-  // })
-
-  // React.useEffect(()=>{
-  //   console.log('Looooooog2'); 
-  // }, [])
-
-  React.useEffect(()=>{
-    console.log('Looooooog2'); 
-  }, [totalTodos])
-  
-
-  console.log('Log3');
-
-
 
   //Todo Search => Search
   const searchedTodos = todos.filter((todo) => {
@@ -64,6 +44,8 @@ function App() {
 
   return (
     <AppUI 
+    loading={loading}
+    error={error}W
     completeTodos = {completeTodos}
     totalTodos = {totalTodos}
     searchValue = {searchValue}
